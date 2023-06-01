@@ -41,7 +41,7 @@ const routes = [
     },{
         path: "/unautharize",
         name: "NotAuthorize",
-        component: ()=>import('../components/NotAuthorize.vue'),
+        component: ()=>import('../components/common/NotAuthorize.vue'),
         meta: {
             requireAuth: true,
         },
@@ -49,7 +49,7 @@ const routes = [
     {
         path: "/:catchAll(.*)",
         name: "NotFound",
-        component: ()=>import('../components/NotFound.vue'),
+        component: ()=>import('../components/common/NotFound.vue'),
         meta: {
             requireAuth: false,
         },
