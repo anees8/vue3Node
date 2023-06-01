@@ -1,0 +1,6 @@
+@import "bootstrap/dist/css/bootstrap.css";
+@import "bootstrap-vue-next/dist/bootstrap-vue-next.css";
+* {
+    margin: 0;
+    padding: 0;
+  }
