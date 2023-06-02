@@ -32,10 +32,9 @@
         <b-row class="text-center">
          <b-col  cols="1" md="1"> 
           
-          <b-button size="sm"><font-awesome-icon
+          <b-button variant="success" size="sm"  @click="exportExcel"><font-awesome-icon
               icon="file-export"
-             
-              @click="exportExcel"
+          
             /></b-button>   </b-col>
           <b-col cols="2" md="3">
             <b-form-select
@@ -175,17 +174,18 @@
           <td>{{ user.role }}</td>
           <td>{{ user.profile ? user.profile.phone : "--" }}</td>
           <td>
-            <font-awesome-icon
-              icon="pen"
-              class="me-2 text-primary"
-              @click="editUser(user._id)"
-            />
 
-            <font-awesome-icon
+
+            <b-button variant="secondary" class="me-2 " size="sm"   @click="editUser(user._id)"><font-awesome-icon
+              icon="user-pen"
+             
+            
+            /></b-button> 
+            <b-button   variant="danger"  size="sm"  @click="deleteUser(user._id)"><font-awesome-icon
               icon="trash-can"
-              class="me-2 text-danger"
-              @click="deleteUser(user._id)"
-            />
+             
+             
+            /></b-button> 
           </td>
         </tr>
       </tbody>

@@ -39,6 +39,16 @@ const routes = [
         
         
     },{
+        path: "/products",
+        name: "Products",
+        component: ()=>import('../components/Products.vue'),
+        meta: {
+            requireAuth: true,    
+          
+        },
+        
+        
+    },{
         path: "/unautharize",
         name: "NotAuthorize",
         component: ()=>import('../components/common/NotAuthorize.vue'),

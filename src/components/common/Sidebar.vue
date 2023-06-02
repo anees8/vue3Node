@@ -79,6 +79,11 @@ const menuTree = [
     icon: "users",
     name: "Users",
   },
+  {
+    label: "Products",
+    icon: "cart-shopping",
+    name: "Products",
+  },
   
   // {
   //   label: "Home",
