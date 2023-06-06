@@ -7,6 +7,8 @@ export const useProductsStore = defineStore("productsStore", {
     state: () => ({
         products: [],
         product: {},
+        images:[],
+        displayImage:[],
         sortKey: '',       // Current sorting key
         sortDirection: '' , // Current sorting direction
         search:"",
@@ -32,6 +34,7 @@ export const useProductsStore = defineStore("productsStore", {
     actions: {
 
         async getProducts(){
+            
         this.isBusy = true;
         try {   
         let url = "products";
@@ -79,24 +82,17 @@ export const useProductsStore = defineStore("productsStore", {
         this.isBusy = false;
         } catch (error) {
 
-            if (error.response) {
-            if (error.response.status === 403) {
-            router.push({ name: "NotAuthorize" });
-            } else if (error.response.status === 400) {
-
-            this.errors = error.response.data.error;
-
-
-            }
-            }
+            this.isBusy = false;
+            this.errors=error.response;
 
             setTimeout(() => {
             this.errors = {};
             }, 5000);
-            
-        this.isBusy = false;
-      
-        this.products= [];
+
+
+
+            this.products= [];
+
 
         }
 
@@ -199,6 +195,11 @@ export const useProductsStore = defineStore("productsStore", {
         this.getProducts();
         this.isBusy = false;
         this.product={};
+        this.images=[];
+        this.displayImage=[];
+        const fileInput = document.getElementById('inputGroupFile02');
+        fileInput.value='';
+
         },
         async  updateProduct(){
 
@@ -206,15 +207,26 @@ export const useProductsStore = defineStore("productsStore", {
 
 
         let url = "products";
-        if (this.product.name) {
+      
         formData.append("name", this.product.name);
-        }
-        if (this.product.price) {
+ 
+       
         formData.append("price", this.product.price);
-        }
-            if (this.product.description) {
-            formData.append("description", this.product.description);
-            }
+       
+        formData.append("description", this.product.description);
+    
+
+
+      
+           
+            this.images.forEach((file, index) => {
+            formData.append("images", file);
+            });
+    
+        
+
+           
+            
 
 
         // formData.append("_method", "put");
@@ -225,6 +237,8 @@ export const useProductsStore = defineStore("productsStore", {
 
         this.hideModel();
         } catch (error) {
+
+           
             if (error.response) {
             if (error.response.status === 403) {
             router.push({ name: "NotAuthorize" });
@@ -280,10 +294,41 @@ export const useProductsStore = defineStore("productsStore", {
             }
            
 
+        },
+        productImages(event){
+            this.displayImage=[];
+            this.images = Array.from(event.target.files);
+
+            if(this.images){
+            for (let i = 0; i < this.images.length; i++) {
+            const reader = new FileReader();
+            reader.onload = () => {
+            this.displayImage.push({ url: reader.result });
+            };
+            reader.readAsDataURL(this.images[i]);
+            }
+            }else{
+                this.displayImage=[];
+            }
+            
+        
+            
+        },
+        removeImage(index){
+           
+            this.images.splice(index, 1);
+            this.displayImage.splice(index, 1);
+            const fileInput = document.getElementById('inputGroupFile02');
+            fileInput.value='';
+
+
         }
+       
         
           
 
           
     },
+
+    
 });

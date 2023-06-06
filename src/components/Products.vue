@@ -39,26 +39,48 @@
 
             <span v-if="errors && errors.price" class="text-danger">{{ errors.price }}</span>
             </b-form-group>
+          
             <b-form-group class="mb-2" label="Product Description:">
             <b-input-group size="sm">
-
-
-     <b-form-textarea
-      id="textarea"
-      v-model="product.description"
-      :disabled="!isBusy ? false : true"
-      placeholder="Enter Description..."
-      rows="3"
-      :class="errors && errors.description ? 'is-invalid' : ''"
-      max-rows="6"
-    ></b-form-textarea>
-
+            <b-form-textarea
+              id="textarea"
+              v-model="product.description"
+              :disabled="!isBusy ? false : true"
+              placeholder="Enter Description..."
+              rows="3"
+              :class="errors && errors.description ? 'is-invalid' : ''"
+              max-rows="6"
+            ></b-form-textarea>
             </b-input-group>
-
             <span v-if="errors && errors.description" class="text-danger">{{ errors.description }}</span>
             </b-form-group>
 
+            <b-form-group class="mb-2" label="Product Image:">
+            <b-input-group size="sm">
 
+            <div class="input-group mb-3">
+            <input type="file"  class="form-control"  @change="productImages"  id="inputGroupFile02" accept="image/*" multiple>
+            <label class="input-group-text" for="inputGroupFile02">Upload</label>
+            </div>
+            
+            </b-input-group>
+         <b-container> <b-row>    
+          <b-col v-for="(image, index) in displayImage" :key="index" class="m-1" >
+              <img :src="image.url" width="70" height="70" class=" position-relative" alt="Uploaded Image" >
+            
+              <font-awesome-icon
+                icon="xmark-circle"  
+                class="position-absolute" 
+                @click="removeImage(index)"        
+              />
+            </b-col>
+            </b-row>
+            
+          
+        </b-container>
+  
+            <span v-if="errors && errors.images" class="text-danger">{{ errors.images }}</span>
+            </b-form-group>
 
         <template #footer>
           <div>
@@ -107,7 +129,7 @@
           </b-row>
         </b-col>
       </b-row>
-  
+   
       <table class="table table-striped table-sm table-responsive table-hover">
         <thead>
           <tr>
@@ -221,7 +243,7 @@
             <td>{{ product.name }}</td>
             <td>{{ product.price }}</td>
             <td>{{ product.description }}</td>
-            <td> <b-img v-for="(image, index) in product.images" :key="index" center :src="image" width="30px"  Height="30px" alt="Center image"></b-img></td>
+            <td scope="row" > <div  v-for="(image, index) in product.images" :key="index"><b-img :src="`http://localhost:3000/`+image" width="30px"  Height="30px" alt="Center image"></b-img></div></td>
             <td>
   
   
@@ -305,7 +327,8 @@
     search,
     namesearch,
     descriptionsearch,
-    pricesearch 
+    pricesearch,
+    images,displayImage
   
    
   } = storeToRefs(useProductsStore());
@@ -319,7 +342,9 @@
     updateProduct,
     sortTable,
     InputSearch,
-    exportExcel
+    exportExcel,
+    productImages,
+    removeImage
   } = useProductsStore();
   
   getProducts();

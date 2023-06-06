@@ -6,15 +6,25 @@
       hide-header-close
       no-close-on-backdrop
     >
-      <b-form-group id="input-group-1" label="Name:" label-for="input-1">
-        <b-form-input
-          id="input-1"
-          v-model="user.name"
-          type="text"
-          placeholder="Enter your Name"
-          required
-        ></b-form-input>
-      </b-form-group>
+
+    
+            <span v-if="errors && errors.error " class="text-danger">{{ errors.error }}</span>
+
+            <b-form-group class="mb-2"  label="Name:">
+            <b-input-group size="sm" >
+
+            <b-form-input
+            type="text"
+            placeholder="Enter Username Name"
+            name="name"
+            :disabled="!isBusy ? false : true"
+            v-model="user.name"
+            :class="errors && errors.name ? 'is-invalid' : ''"
+            ></b-form-input>
+            </b-input-group>
+
+            <span v-if="errors && errors.name" class="text-danger">{{ errors.name }}</span>
+            </b-form-group>
 
       <template #footer>
         <div>
@@ -241,6 +251,7 @@ import { useUsersStore } from "../stores/usersStore.js";
 
 const {
   users,
+  errors,
   user,
   page,
   rows,

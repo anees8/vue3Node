@@ -163,9 +163,9 @@ export const useUsersStore = defineStore("usersStore", {
 
 
         let url = "users";
-        if (this.user.name) {
+   
         formData.append("name", this.user.name);
-        }
+    
 
 
 
@@ -177,17 +177,20 @@ export const useUsersStore = defineStore("usersStore", {
 
         this.hideModel();
         } catch (error) {
-        if (error.response) {
-            if (error.response.status === 403) {
+
+            
+            if (error.response) {
+                if (error.response.status === 403) {
                 router.push({ name: "NotAuthorize" });
-            } else if (error.response.status === 400) {
-                    this.errors = error.response.data.errors;
-            }
-        }
-        this.loading = false;
-        setTimeout(() => {
-            this.errors = {};
-        }, 5000);
+                } else if (error.response.status === 400) {
+    
+                this.errors = error.response.data.error;
+    
+                }
+                }
+                setTimeout(() => {
+                this.errors = {};
+                }, 5000);
         }
 
         },
