@@ -94,17 +94,28 @@
         </template>
       </b-modal>
       <b-row>
-        <b-col cols="12" md="6" lg="6" xl="3" class="mb-3 ms-auto">
+        <b-col cols="12"  lg="8" xl="4" class="mb-3 ms-auto">
           <b-row class="text-center">
+            <b-col  cols="1" md="1"> 
+            
+            <b-button variant="primary" size="sm"  @click="modal=true"><font-awesome-icon
+                icon="plus"
+            
+              /></b-button>   
+              
+              </b-col>
            <b-col  cols="1" md="1"> 
             
             <b-button variant="success" size="sm"  @click="exportExcel"><font-awesome-icon
                 icon="file-export"
             
-              /></b-button>   </b-col>
+              /></b-button>   
+              
+              </b-col>
+              
             <b-col cols="2" md="3">
               <b-form-select
-                v-if="rows > 5"
+              
                 v-model="limit"
                 :options="options"
                 size="sm"
@@ -112,7 +123,7 @@
                 varient="dark"
               ></b-form-select>
             </b-col>
-            <b-col cols="9" md="8">
+            <b-col cols="8" md="7">
               <div class="input-group input-group-sm mb-3">
                 <!-- <span class="input-group-text" id="basic-addon1"><font-awesome-icon  icon="magnifying-glass" class="me-2"></font-awesome-icon></span> -->
                 <input
@@ -133,8 +144,8 @@
       <table class="table table-striped table-sm table-responsive table-hover">
         <thead>
           <tr>
-            <th scope="col">#</th>
-            <th
+            <th width="5%"  scope="col">#</th>
+            <th width="19%" 
               scope="col"
               @click="sortTable('name')"
               :class="{ active: sortKey === 'name' }"
@@ -151,7 +162,7 @@
                 class="me-2 text-success"
               />
             </th>
-            <th
+            <th width="19%" 
               scope="col"
               @click="sortTable('price')"
               :class="{ active: sortKey === 'price' }"
@@ -168,7 +179,7 @@
                 class="me-2 text-success"
               />
             </th>
-            <th
+            <th width="19%" 
               scope="col"
               @click="sortTable('description')"
               :class="{ active: sortKey === 'description' }"
@@ -185,9 +196,9 @@
                 class="me-2 text-success"
               />
             </th>
-            <th scope="col">Images</th>
+            <th scope="col" width="28%" >Images</th>
            
-            <th scope="col">Actions</th>
+            <th scope="col" width="10%" >Actions</th>
           </tr>
           <tr>
             <th scope="col"></th>
@@ -243,7 +254,13 @@
             <td>{{ product.name }}</td>
             <td>{{ product.price }}</td>
             <td>{{ product.description }}</td>
-            <td scope="row" > <div  v-for="(image, index) in product.images" :key="index"><b-img :src="`http://localhost:3000/`+image" width="30px"  Height="30px" alt="Center image"></b-img></div></td>
+            <td > 
+               <b-img v-for="(image, index) in product.images" :key="index"  :src="`http://localhost:3000/`+image" class="m-1" width="40px"   alt="Center image"></b-img>
+        
+         
+          
+              
+            </td>
             <td>
   
   

@@ -6,7 +6,12 @@ import router from "../router/index.js";
 export const useProductsStore = defineStore("productsStore", {
     state: () => ({
         products: [],
-        product: {},
+        product: {
+            _id:"",
+            name:"",
+            description:"",
+            price:"",
+        },
         images:[],
         displayImage:[],
         sortKey: '',       // Current sorting key
@@ -194,9 +199,15 @@ export const useProductsStore = defineStore("productsStore", {
         this.modal = !this.modal;
         this.getProducts();
         this.isBusy = false;
-        this.product={};
+        this.product={
+            _id:"",
+            name:"",
+            description:"",
+            price:"",
+        };
         this.images=[];
         this.displayImage=[];
+        this.errors={};
         const fileInput = document.getElementById('inputGroupFile02');
         fileInput.value='';
 
@@ -204,54 +215,58 @@ export const useProductsStore = defineStore("productsStore", {
         async  updateProduct(){
 
         const formData = new FormData();
+                
+            let url = "products";
 
-
-        let url = "products";
-      
-        formData.append("name", this.product.name);
- 
-       
-        formData.append("price", this.product.price);
-       
-        formData.append("description", this.product.description);
-    
-
-
-      
-           
+            formData.append("name", this.product.name);
+            formData.append("price", this.product.price);
+            formData.append("description",this.product.description);
+                
+            if(this.images){
             this.images.forEach((file, index) => {
             formData.append("images", file);
             });
-    
-        
-
-           
-            
+            }
 
 
-        // formData.append("_method", "put");
-        try {
-        const response = await axios.put(
+            if(this.product._id){
+            // formData.append("_method", "put");
+            try {
+            const response = await axios.put(
             url + "/" + this.product._id,
             formData);
-
-        this.hideModel();
-        } catch (error) {
-
-           
+            this.hideModel();
+            } catch (error) {
             if (error.response) {
             if (error.response.status === 403) {
             router.push({ name: "NotAuthorize" });
             } else if (error.response.status === 400) {
-
             this.errors = error.response.data.error;
-
             }
             }
             setTimeout(() => {
             this.errors = {};
-            }, 5000);
-        }
+            }, 10000);
+            }
+                }else{
+                try {
+                const response = await axios.post(url,formData);
+                this.hideModel();
+
+                } catch (error) {
+                if (error.response) {
+                if (error.response.status === 403) {
+                router.push({ name: "NotAuthorize" });
+                } else if (error.response.status === 400) {
+                this.errors = error.response.data.error;
+                }
+                }
+                setTimeout(() => {
+                this.errors = {};
+                }, 10000);
+                }
+
+                }
 
         },
         async exportExcel(){
@@ -318,8 +333,7 @@ export const useProductsStore = defineStore("productsStore", {
            
             this.images.splice(index, 1);
             this.displayImage.splice(index, 1);
-            const fileInput = document.getElementById('inputGroupFile02');
-            fileInput.value='';
+            
 
 
         }
