@@ -16,7 +16,7 @@
     "bootstrap-vue-next": "^0.8.14",
     "moment": "^2.29.4",
     "pinia": "^2.0.36",
-    "sweetalert2": "^11.7.5",
+    "sweetalert2": "^11.4.8",
     "vue": "^3.3.2",
     "vue-router": "^4.2.1"
   },
