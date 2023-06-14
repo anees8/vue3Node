@@ -42,7 +42,7 @@ export const useProductsStore = defineStore("productsStore", {
             
         this.isBusy = true;
         try {   
-        let url = "products";
+        let url = "api/products";
         if (this.limit) {
         url += `?limit=${this.limit}`;
         }
@@ -170,7 +170,7 @@ export const useProductsStore = defineStore("productsStore", {
         async editProduct(id){
         try {
 
-        let url = "products";
+        let url = "api/products";
 
         const response = await axios.get(url+'/'+id);
             
@@ -216,7 +216,7 @@ export const useProductsStore = defineStore("productsStore", {
 
         const formData = new FormData();
                 
-            let url = "products";
+            let url = "api/products";
 
             formData.append("name", this.product.name);
             formData.append("price", this.product.price);
@@ -232,7 +232,7 @@ export const useProductsStore = defineStore("productsStore", {
             if(this.product._id){
             // formData.append("_method", "put");
             try {
-            const response = await axios.put(
+            const response = await axios.patch(
             url + "/" + this.product._id,
             formData);
             this.hideModel();

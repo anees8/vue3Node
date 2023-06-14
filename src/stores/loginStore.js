@@ -29,7 +29,7 @@ export const useLoginStore = defineStore("loginStore", {
           
             try {
             
-            const response = await axios.post("login", this.user);
+            const response = await axios.post("api/login", this.user);
             this.setToken(response.data);
            
             if (response.data.token) {
@@ -56,7 +56,7 @@ export const useLoginStore = defineStore("loginStore", {
         async logout() {
             this.loading = true;
             try {
-                const response = await axios.post("logout");
+                const response = await axios.post("api/logout");
               
                 this.loading = false;
             } catch (error) {
@@ -87,7 +87,7 @@ export const useLoginStore = defineStore("loginStore", {
              
             try {
             
-                const response = await axios.post("register", this.registeruser);
+                const response = await axios.post("api/register", this.registeruser);
                 this.loading = false;
                 this.registeruser={
                     name: "",

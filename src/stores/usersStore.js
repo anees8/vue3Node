@@ -38,7 +38,7 @@ export const useUsersStore = defineStore("usersStore", {
         async getUsers(){
         this.isBusy = true;
         try {
-        let url = "users";
+        let url = "api/users";
         if (this.limit) {
         url += `?limit=${this.limit}`;
         }
@@ -118,7 +118,7 @@ export const useUsersStore = defineStore("usersStore", {
         cancelButtonText: "No, cancel",
         }).then((result) => {
         if (result.isConfirmed) {
-        let url = "users";
+        let url = "api/users";
         axios
         .delete(url+'/'+id)
         .then((res) => {
@@ -140,7 +140,7 @@ export const useUsersStore = defineStore("usersStore", {
         async editUser(id){
         try {
 
-        let url = "users";
+        let url = "api/users";
 
         const response = await axios.get(url+'/'+id);
         this.user =response.data.user;
@@ -162,7 +162,7 @@ export const useUsersStore = defineStore("usersStore", {
         const formData = new FormData();
 
 
-        let url = "users";
+        let url = "api/users";
    
         formData.append("name", this.user.name);
     
@@ -171,7 +171,7 @@ export const useUsersStore = defineStore("usersStore", {
 
         // formData.append("_method", "put");
         try {
-        const response = await axios.put(
+        const response = await axios.patch(
             url + "/" + this.user._id,
             formData);
 

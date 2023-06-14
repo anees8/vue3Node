@@ -255,7 +255,7 @@
             <td>{{ product.price }}</td>
             <td>{{ product.description }}</td>
             <td > 
-               <b-img v-for="(image, index) in product.images" :key="index"  :src="`http://localhost:3000/`+image" class="m-1" width="40px"   alt="Center image"></b-img>
+               <b-img crossorigin="anonymous" v-for="(image, index) in product.images" :key="index"  :src="axios.defaults.baseURL+image" class="m-1" width="40px"   alt="Center image"></b-img>
         
          
           
@@ -322,9 +322,9 @@
         ></b-col>
       </b-row>
     </div>
-    
   </template>
   <script setup>
+  import axios from 'axios';
   import { storeToRefs } from "pinia";
   import { useProductsStore } from "../stores/productsStore.js";
   
